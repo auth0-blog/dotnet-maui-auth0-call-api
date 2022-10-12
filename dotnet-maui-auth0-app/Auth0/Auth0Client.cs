@@ -7,6 +7,7 @@ namespace MauiAuth0App.Auth0;
 public class Auth0Client
 {
   private readonly OidcClient oidcClient;
+  private string audience;
 
   public Auth0Client(Auth0ClientOptions options)
   {
@@ -18,6 +19,8 @@ public class Auth0Client
       RedirectUri = options.RedirectUri,
       Browser = options.Browser
     });
+
+    audience = options.Audience;
   }
 
   public IdentityModel.OidcClient.Browser.IBrowser Browser
@@ -34,7 +37,19 @@ public class Auth0Client
 
   public async Task<LoginResult> LoginAsync()
   {
-    return await oidcClient.LoginAsync();
+    LoginRequest loginRequest = null;
+
+    if (!string.IsNullOrEmpty(audience))
+    {
+      loginRequest = new LoginRequest
+        {
+          FrontChannelExtraParameters = new Parameters(new Dictionary<string, string>()
+            {
+              {"audience", audience}
+            })
+      };
+    }
+    return await oidcClient.LoginAsync(loginRequest);
   }
 
   public async Task<BrowserResult> LogoutAsync()

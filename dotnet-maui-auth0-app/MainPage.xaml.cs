@@ -6,11 +6,14 @@ public partial class MainPage : ContentPage
 {
 	int count = 0;
   private readonly Auth0Client auth0Client;
+  private string accessToken;
+  private HttpClient _httpClient;
 
-  public MainPage(Auth0Client client)
+  public MainPage(Auth0Client client, HttpClient httpClient)
 	{
 		InitializeComponent();
     auth0Client = client;
+    _httpClient = httpClient;
 
 #if WINDOWS
     auth0Client.Browser = new WebViewBrowserAuthenticator(WebViewInstance);
@@ -41,6 +44,8 @@ public partial class MainPage : ContentPage
 
       LoginView.IsVisible = false;
       HomeView.IsVisible = true;
+
+      TokenHolder.AccessToken = loginResult.AccessToken;
     }
     else
     {
@@ -60,6 +65,22 @@ public partial class MainPage : ContentPage
     else
     {
       await DisplayAlert("Error", logoutResult.ErrorDescription, "OK");
+    }
+  }
+
+  private async void OnApiCallClicked(object sender, EventArgs e)
+  {
+    try
+    {
+      HttpResponseMessage response = await _httpClient.GetAsync("api/messages/protected");
+      {
+        string content = await response.Content.ReadAsStringAsync();
+        await DisplayAlert("Info", content, "OK");
+      }
+    }
+    catch (Exception ex)
+    {
+      await DisplayAlert("Error", ex.Message, "OK");
     }
   }
 }

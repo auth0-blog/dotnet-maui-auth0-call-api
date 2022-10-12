@@ -66,6 +66,13 @@
                 HorizontalOptions="Center" />
 
             <Button 
+                x:Name="CallAPIBtn"
+                Text="Call API"
+                SemanticProperties.Hint="Click to call the API"
+                Clicked="OnApiCallClicked"
+                HorizontalOptions="Center" />
+
+            <Button 
                 x:Name="LogoutBtn"
                 Text="Log Out"
                 SemanticProperties.Hint="Click to log out"

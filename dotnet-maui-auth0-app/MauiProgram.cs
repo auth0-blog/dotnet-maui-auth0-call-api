@@ -1,5 +1,6 @@
 ﻿using Microsoft.Extensions.Logging;
 using MauiAuth0App.Auth0;
+using Microsoft.Extensions.Http;
 
 namespace MauiAuth0App;
 
@@ -27,12 +28,21 @@ public static class MauiProgram
       Domain = "<YOUR_AUTH0_DOMAIN>",
       ClientId = "<YOUR_CLIENT_ID>",
       Scope = "openid profile",
+			Audience = "https://myapi.com",
 #if WINDOWS
 			RedirectUri = "http://localhost/callback"
 #else
       RedirectUri = "myapp://callback"
 #endif
     }));
+
+    builder.Services.AddSingleton<TokenHandler>();
+    builder.Services.AddHttpClient("DemoAPI",
+			client => client.BaseAddress = new Uri("https://localhost:6061")
+		).AddHttpMessageHandler<TokenHandler>();
+		builder.Services.AddTransient(
+			sp => sp.GetRequiredService<IHttpClientFactory>().CreateClient("DemoAPI")
+		);
 
     return builder.Build();
 	}
