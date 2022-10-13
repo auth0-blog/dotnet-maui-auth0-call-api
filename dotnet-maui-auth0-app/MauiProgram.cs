@@ -1,4 +1,4 @@
-﻿using Microsoft.Extensions.Logging;
+using Microsoft.Extensions.Logging;
 using MauiAuth0App.Auth0;
 using Microsoft.Extensions.Http;
 
@@ -28,7 +28,7 @@ public static class MauiProgram
       Domain = "<YOUR_AUTH0_DOMAIN>",
       ClientId = "<YOUR_CLIENT_ID>",
       Scope = "openid profile",
-			Audience = "https://myapi.com",
+      Audience = "<YOUR_API_IDENTIFIER>",
 #if WINDOWS
 			RedirectUri = "http://localhost/callback"
 #else
