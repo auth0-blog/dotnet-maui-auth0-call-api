@@ -1,6 +1,6 @@
 This repository contains a basic .NET MAUI application and an ASP.NET Core Web API. Both applications are integrated with Auth0 and the .NET MAUI application calls a protected API endpoint.
 
-Check out the article [Call a Protected API from a .NET MAUI Application](https://auth0.com/blog/) for the implementation details.
+Check out the article [Call a Protected API from a .NET MAUI Application](https://auth0.com/blog/call-protected-api-from-dotnet-maui-application/) for the implementation details.
 
 # Requirements
 
