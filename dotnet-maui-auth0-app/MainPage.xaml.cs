@@ -6,7 +6,6 @@ public partial class MainPage : ContentPage
 {
 	int count = 0;
   private readonly Auth0Client auth0Client;
-  private string accessToken;
   private HttpClient _httpClient;
 
   public MainPage(Auth0Client client, HttpClient httpClient)
